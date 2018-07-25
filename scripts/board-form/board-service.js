@@ -1,7 +1,7 @@
 define(["require", "exports", "TFS/WorkItemTracking/RestClient", "TFS/WorkItemTracking/Contracts", "TFS/Core/RestClient", "TFS/Work/RestClient"], function (require, exports, WitClient, WitContracts, CoreClient, WorkClient) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var BoardService = (function () {
+    var BoardService = /** @class */ (function () {
         function BoardService(workItemId) {
             this.boardColumns = new Array();
             this.boardColumnSplits = new Array();
