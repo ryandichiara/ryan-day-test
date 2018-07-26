@@ -17,14 +17,18 @@
         });
 
         // Load main entry point for extension 
-        VSS.require(["scripts/board-form/app","TFS/Dashboards/WidgetHelpers"], function (app, WidgetHelpers) {
-            // loading succeeded
-            WidgetHelpers.IncludeWidgetStyles();
-            VSS.notifyLoadSucceeded(); 
+        // VSS.require(["scripts/board-form/app","TFS/Dashboards/WidgetHelpers"], function (app, WidgetHelpers) {
+        //     // loading succeeded
+        //     WidgetHelpers.IncludeWidgetStyles();
+        //     VSS.notifyLoadSucceeded(); 
+        // });
+        VSS.require(["scripts/board-form/wsjfSettings"], function (s) {
+            var settings = new s.Settings();
+            settings.initialize();
         });
     </script> 
 
-    <div class="widget-configuration">
+    <!-- <div class="widget-configuration">
         <div class="description">Select a board column and swimlane to move your work item.</p>
 
         <div class="dropdown">
@@ -52,6 +56,11 @@
                 </select>
             </div>
         </div>
+    </div> -->
+    <div class="hub-view">
+        <div class="hub-title">Settings</div>
+
+        <div class="hub-content" />
     </div>
 </body>
 </html>
