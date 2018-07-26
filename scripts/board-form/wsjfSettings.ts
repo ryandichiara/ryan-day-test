@@ -1,4 +1,4 @@
-// import "./wsjfSettings.scss";
+//import "wsjfSettings.scss";
 
 
 
@@ -33,7 +33,7 @@ export class Settings {
 
 
     private getSortedFieldsList():IPromise<any> {
-
+        debugger;
         var deferred = Q.defer();
 
         var client = WIT_Client.getClient();
@@ -165,7 +165,7 @@ export class Settings {
 
 
     public initialize() {
-
+        debugger;
         let hubContent = $(".hub-content");
 
         let uri = VSS.getWebContext().collection.uri + "_admin/_process";
@@ -266,6 +266,7 @@ export class Settings {
 
         VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
 
+            debugger;
             dataService.getValue<StoredFieldReferences>("storedFields").then((storedFields:StoredFieldReferences) => {
 
                 if (storedFields) {

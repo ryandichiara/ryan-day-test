@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script src="sdk/scripts/VSS.SDK.min.js"></script> 
+</head>
+<body>
+    <script type="text/javascript">
+        // Initialize framework 
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformScripts: true,
+            configureModuleLoader: true
+        });
+        
+        // Load main entry point for extension
+        // VSS.require(["scripts/board-form/wsjf"], function () {
+        //     // Loading succeeded
+        //     VSS.notifyLoadSucceeded();
+        // });
+
+
+        //function testing() {
+        VSS.require(["VSS/Service", "TFS/WorkItemTracking/RestClient", "TFS/Core/RestClient", "TFS/WorkItemTracking/Services"],
+            function(VSS_Service, TFS_Wit_WebApi, TFS_Core_WebApi, _WorkItemServices) {
+                function getWorkItemFormService()
+                {
+                    return _WorkItemServices.WorkItemFormService.getService();
+                }
+                
+                getWorkItemFormService().then(function(service) {          
+                    // Get the current values for a few of the common fields
+                    service.getFieldValues(["System.Id", "System.Title", "System.State", "System.CreatedDate", "System.ChangedDate", "System.BoardColumn", "ryandichiaraAgile.RyanTest"]).then(
+                        function (value) {
+                            debugger;
+                            $(".events").append($("<div/>").text("onLoaded - " + JSON.stringify(value)));
+                        });
+                    service.setFieldValue("ryandichiaraAgile.RyanTest", "hello");
+                });
+        });
+        //}
+    </script>
+    <h1>Ryan</h1>
+</body>
+</html>
