@@ -24,7 +24,6 @@
         
         VSS.require(["VSS/Service", "TFS/WorkItemTracking/RestClient", "TFS/Core/RestClient", "TFS/WorkItemTracking/Services"],
             function(VSS_Service, TFS_Wit_WebApi, TFS_Core_WebApi, _WorkItemServices) {
-                debugger;
                 function getWorkItemFormService()
                 {
                     return _WorkItemServices.WorkItemFormService.getService();
@@ -84,7 +83,7 @@
                 getWorkItemFormService().then(function(service) {          
                     // Get the current values for a few of the common fields
                     service.getFieldValues(["System.Id", "System.Title", "System.State", "System.CreatedDate", "System.ChangedDate", "System.BoardColumn"
-                        , "ryandichiaraAgile.PreviousBoardColumn", "ryandichiaraAgile.CurrentBoardColumn", "ryandichiaraAgile.InitialDayinCurrentColumn"
+                        , "ryandichiaraAgile.PreviousBoardColumn", "ryandichiaraAgile.CurrentBoardColumn", "ryandichiaraAgile.InitialDayinColumn"
                         , "ryandichiaraAgile.DaysinLane"]).then(
                         function (value) {
                             var today = new Date();
@@ -93,17 +92,21 @@
                             var yyyy = today.getFullYear();
                             today = mm + '/' + dd + '/' + yyyy;
 
-                            var initialDayinCurrentColumnShortDate = (value["ryandichiaraAgile.InitialDayinCurrentColumn"].getMonth() + 1) + '/' + value["ryandichiaraAgile.InitialDayinCurrentColumn"].getDate() + '/' + value["ryandichiaraAgile.InitialDayinCurrentColumn"].getFullYear();
+                            //var initialDayinColumnShortDate = (value["ryandichiaraAgile.InitialDayinColumn"].getMonth() + 1) + '/' + value["ryandichiaraAgile.InitialDayinColumn"].getDate() + '/' + value["ryandichiaraAgile.InitialDayinCurrentColumn"].getFullYear();
                             // $(".events").append($("<div/>").text("onLoaded - " + JSON.stringify(value)));
                             debugger;
                             if (value["ryandichiaraAgile.PreviousBoardColumn"] == ""){
                                 service.setFieldValue("ryandichiaraAgile.PreviousBoardColumn", value["System.BoardColumn"]);
-                                service.setFieldValue("ryandichiaraAgile.InitialDayinCurrentColumn", today);
+                                service.setFieldValue("ryandichiaraAgile.InitialDayinColumn", today);
                                 service.setFieldValue("ryandichiaraAgile.DaysinLane", 1);
                             }
-                            else if ((value["ryandichiaraAgile.CurrentBoardColumn"] == value["ryandichiaraAgile.PreviousBoardColumn"]) && (initialDayinCurrentColumnShortDate != today)){
-                                service.setFieldValue("ryandichiaraAgile.DaysinLane", value["ryandichiaraAgile.DaysinLane"] + 1);
-                                service.setFieldValue("ryandichiaraAgile.InitialDayinCurrentColumn", today);
+                            else if ((value["ryandichiaraAgile.CurrentBoardColumn"] == value["ryandichiaraAgile.PreviousBoardColumn"]) && (value["ryandichiaraAgile.InitialDayinColumn"] != today)){
+                                var todaysDate = new Date(today);
+                                var initialDayinColumnDate = new Date(value["ryandichiaraAgile.InitialDayinColumn"]);
+                                var diffDays = Math.ceil((todaysDate - initialDayinColumnDate)/(1000*60*60*24));
+                                debugger;
+                                service.setFieldValue("ryandichiaraAgile.DaysinLane", diffDays);
+                                //service.setFieldValue("ryandichiaraAgile.InitialDayinColumn", today);
                             }
                             //service.setFieldValue("ryandichiaraAgile.PreviousBoardColumn", value["System.BoardColumn"]);
                             service.setFieldValue("ryandichiaraAgile.CurrentBoardColumn", value["System.BoardColumn"]);
