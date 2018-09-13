@@ -83,35 +83,35 @@
                 getWorkItemFormService().then(function(service) {          
                     // Get the current values for a few of the common fields
                     service.getFieldValues(["System.Id", "System.Title", "System.State", "System.CreatedDate", "System.ChangedDate", "System.BoardColumn"
-                        , "ryandichiaraAgile.PreviousBoardColumn", "ryandichiaraAgile.CurrentBoardColumn", "ryandichiaraAgile.InitialDayinColumn"
-                        , "ryandichiaraAgile.DaysinLane"]).then(
+                        , "Custom.PreviousBoardColumn", "Custom.CurrentBoardColumn", "Custom.InitialDayinColumn"
+                        , "Custom.DaysinLane"]).then(
                         function (value) {
                             var today = new Date();
                             var dd = today.getDate();
                             var mm = today.getMonth()+1;
                             var yyyy = today.getFullYear();
                             today = mm + '/' + dd + '/' + yyyy;
-
+                            
                             //var initialDayinColumnShortDate = (value["ryandichiaraAgile.InitialDayinColumn"].getMonth() + 1) + '/' + value["ryandichiaraAgile.InitialDayinColumn"].getDate() + '/' + value["ryandichiaraAgile.InitialDayinCurrentColumn"].getFullYear();
                             // $(".events").append($("<div/>").text("onLoaded - " + JSON.stringify(value)));
                             debugger;
-                            if (value["ryandichiaraAgile.PreviousBoardColumn"] == ""){
-                                service.setFieldValue("ryandichiaraAgile.PreviousBoardColumn", value["System.BoardColumn"]);
-                                service.setFieldValue("ryandichiaraAgile.InitialDayinColumn", today);
-                                service.setFieldValue("ryandichiaraAgile.DaysinLane", 1);
+                            if (value["Custom.PreviousBoardColumn"] == ""){ // was ryandichiaraAgile
+                                service.setFieldValue("Custom.PreviousBoardColumn", value["System.BoardColumn"]);
+                                service.setFieldValue("Custom.InitialDayinColumn", today);
+                                service.setFieldValue("Custom.DaysinLane", 1);
                             }
-                            else if ((value["System.BoardColumn"] == value["ryandichiaraAgile.PreviousBoardColumn"]) && (value["ryandichiaraAgile.InitialDayinColumn"] != today)){
+                            else if ((value["System.BoardColumn"] == value["Custom.PreviousBoardColumn"]) && (value["Custom.InitialDayinColumn"] != today)){
                                 var todaysDate = new Date(today);
-                                var initialDayinColumnDate = new Date(value["ryandichiaraAgile.InitialDayinColumn"]);
+                                var initialDayinColumnDate = new Date(value["Custom.InitialDayinColumn"]);
                                 var diffDays = Math.ceil((todaysDate - initialDayinColumnDate)/(1000*60*60*24));
                                 debugger;
-                                service.setFieldValue("ryandichiaraAgile.DaysinLane", diffDays);
+                                service.setFieldValue("Custom.DaysinLane", diffDays);
                                 //service.setFieldValue("ryandichiaraAgile.InitialDayinColumn", today);
                             }
-                            else if (value["System.BoardColumn"] != value["ryandichiaraAgile.PreviousBoardColumn"]){
-                                service.setFieldValue("ryandichiaraAgile.PreviousBoardColumn", value["System.BoardColumn"]);
-                                service.setFieldValue("ryandichiaraAgile.InitialDayinColumn", today);
-                                service.setFieldValue("ryandichiaraAgile.DaysinLane", 1);
+                            else if (value["System.BoardColumn"] != value["Custom.PreviousBoardColumn"]){
+                                service.setFieldValue("Custom.PreviousBoardColumn", value["System.BoardColumn"]);
+                                service.setFieldValue("Custom.InitialDayinColumn", today);
+                                service.setFieldValue("Custom.DaysinLane", 1);
                             }
                             //service.setFieldValue("ryandichiaraAgile.PreviousBoardColumn", value["System.BoardColumn"]);
                             //service.setFieldValue("ryandichiaraAgile.CurrentBoardColumn", value["System.BoardColumn"]);
