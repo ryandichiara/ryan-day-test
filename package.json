@@ -1,10 +1,10 @@
 {
   "name": "vsts-extension-board-control",
   "version": "1.0.0",
-  "description": "Board Form Control",
+  "description": "KiZAN VSTS Extension Dev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mikebranstein/vsts-extension-board-control.git"
+    "url": "git+https://github.com/ryandichiara/ryan-day-test"
   },
   "license": "MIT",
   "bugs": {
